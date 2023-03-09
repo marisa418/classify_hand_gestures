@@ -5,8 +5,8 @@ from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+# Load data and preprocess as needed
 data = pd.read_csv('Data.csv')
-
 X = data.iloc[:, :-1] # Select all columns except the last one
 y = data.iloc[:, -1]  # Select the last column
 
