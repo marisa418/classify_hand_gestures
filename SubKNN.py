@@ -6,20 +6,16 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
 # Load data
-data = pd.read_csv("Data.csv")
+data = pd.read_csv("EMG400.csv")
 
 # Split data into training and testing sets
 X = data.iloc[:, :-1]
 y = data.iloc[:, -1]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Normalize the data
-scaler = StandardScaler()
-X_train = scaler.fit_transform(X_train)
-X_test = scaler.transform(X_test)
 
 # Train Subspace KNN
-knn = KNeighborsClassifier(n_neighbors=5, algorithm="brute")
+knn = KNeighborsClassifier(n_neighbors=100, algorithm="brute")
 knn.fit(X_train, y_train)
 
 # Make predictions and evaluate accuracy

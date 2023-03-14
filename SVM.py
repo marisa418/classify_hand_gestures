@@ -4,7 +4,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score
 
-data = pd.read_csv('Data.csv')
+data = pd.read_csv('AllData.csv')
 
 X = data.iloc[:, :-1] 
 y = data.iloc[:, -1] 

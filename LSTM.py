@@ -5,7 +5,7 @@ from keras.models import Sequential
 from keras.layers import LSTM, Dense
 
 # Load data and preprocess as needed
-data = pd.read_csv("Data.csv")
+data = pd.read_csv("emg.csv")
 X = data.iloc[:, :-1].values  # convert to numpy array
 y = data.iloc[:, -1].values
 
