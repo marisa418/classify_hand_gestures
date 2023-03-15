@@ -4,13 +4,26 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
-
+from scipy.fft import fft, fftfreq, fftshift, ifft
+from scipy import signal
+from imblearn.over_sampling import SMOTE
+from numpy import array
+import warnings
+warnings.filterwarnings("ignore")
 # Load data
-data = pd.read_csv("EMG400.csv")
+dataset = pd.read_csv("EmgCopy.csv")
+data=array(dataset)
+X = data[:,:-1]
+y = data[:,-1:]
+# X1 = X1.reshape(-1)
+# sos = signal.iirfilter(88, [50, 400], rs=150, btype='band',
+#                        analog=False, ftype='cheby2', fs=9600,
+#                        output='sos')
+# X = signal.sosfilt(sos,X1)
+# X = X.reshape(-1,1)
 
 # Split data into training and testing sets
-X = data.iloc[:, :-1]
-y = data.iloc[:, -1]
+
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 
