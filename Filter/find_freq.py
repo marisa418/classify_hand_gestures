@@ -9,41 +9,37 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.svm import SVC
+from sklearn.neural_network import MLPClassifier
 warnings.filterwarnings("ignore")
 
-dataset = pd.read_csv('Emg012.csv')
+dataset = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Data/Data123/data123.csv')
 data=array(dataset)
 X = data[:,:-1]
 y = data[:,-1]
 
+Rm = []
+ACC=[]
 
-ranges_freq = [(50,100),(50,200),(50,300),(50,400),(50,500),(50,600),(50,700),(50,800),(50,900),(50,1000),(50,1500),(50,2000),(50,2500),(50,3000),(50,3500),(50,4000),(50,4500)]
+
+ranges_freq = [(55,100),(55,300),(55,500),(55,700),(55,900),(5,1000),(5,1500),(5,2000),(5,2500),(5,3000),(5,3500),(5,4000),(5,4500),(5,3000)]
 
 X = X.reshape(-1)
 for i in ranges_freq:
-    sos = signal.iirfilter(91, i, rs=150, btype='band',
+    sos = signal.iirfilter(90, i, rs=150, btype='band',
                        analog=False, ftype='cheby2', fs=9600,
                        output='sos')
     X_filtered = signal.sosfilt(sos,X)
     X_filtered = X_filtered.reshape(-1,1)
 
 # Calculate the RMSE between the original data and the filtered data
-    # rmse = mean_squared_error(X, X_filtered, squared=False)
-    print("Freq: ",i)
-    # print(f"RMSE: {rmse:.4f}")
-    
-    X_train, X_test, y_train, y_test = train_test_split(X_filtered, y, test_size=0.2, random_state=42)
-
-
-    base_estimator = DecisionTreeClassifier(max_depth=6,max_features = None)
-
-# Define bagging classifier
-    bagging = BaggingClassifier(base_estimator=base_estimator, n_estimators=10, random_state=42)
-
-# Train bagging classifier
-    bagging.fit(X_train, y_train)
-
-# Evaluate bagging classifier
-    score = bagging.score(X_test, y_test)
-    print('Accuracy:', score)
-    
+    X_train, X_test, y_train, y_test = train_test_split(X_filtered, y, test_size=0.3, random_state=88)
+    knn = KNeighborsClassifier()
+    knn_best = KNeighborsClassifier(n_neighbors=10, 
+                                weights='uniform', 
+                                algorithm='brute')
+    knn_best.fit(X_train, y_train)
+    y_pred = knn_best.predict(X_test)
+    score = accuracy_score(y_test, y_pred)
+    print(i)
+    print("Accuracy:", score)
