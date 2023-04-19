@@ -1,3 +1,4 @@
+import joblib
 import pandas as pd
 import numpy as np
 from numpy import array
@@ -31,5 +32,6 @@ base_estimator = DecisionTreeClassifier(max_depth=6,max_features = None)
 bagging = BaggingClassifier(base_estimator=base_estimator, n_estimators=10, random_state=88)
 bagging.fit(X_train, y_train)
 y_pred = bagging.predict(X_test)
-accuracy = accuracy_score(y_test, y_pred)
-print(accuracy)
+#accuracy = accuracy_score(y_test, y_pred)
+#print(accuracy)
+joblib.dump(bagging, 'bagging_model.joblib')
