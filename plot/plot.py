@@ -9,47 +9,32 @@ import warnings
 from scipy import signal
 warnings.filterwarnings("ignore")
 # load the dataset
+from scipy.signal import butter, lfilter
+
+data = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Kwan/fist_hand/1.csv')
+data0 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Kwan/open_hand/1.csv')
+data1 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Kwan/love_hand/1.csv')
+data2 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Kwan/two_finger/1.csv')
+data3 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Liu/two_finger/1t.csv')
+data4 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Liu/love_hand/1l.csv')
+data5 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Liu/fist_hand/1f.csv')
+data6 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Two_sensor/Liu/open_hand/1.csv')
+
+X6 = data6.iloc[:,:1]
+X = data.iloc[:,:1]
+X0 = data0.iloc[:,:1]
+X1 = data1.iloc[:,:1]
+X2 = data2.iloc[:,:1]
+X3 = data3.iloc[:,:1]
+X4 = data4.iloc[:,:1]
+X5 = data5.iloc[:,:1]
+import matplotlib.pyplot as plt
+fig,(ax1) = plt.subplots(1, 1)
 
 
-dataset1 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Position/OpenHand/open_hand_1.csv')
-dataset2 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Position/OpenHand/open_hand_2.csv')
-dataset3 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Position/OpenHand/open_hand_3.csv')
-dataset4 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Position/OpenHand/open_hand_4.csv')
-dataset5 = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Position/OpenHand/open_hand_5.csv')
-data1=array(dataset1)
-data2=array(dataset2)
-data3=array(dataset3)
-data4=array(dataset4)
-data5=array(dataset5)
-X1 = data1[:,:]
-X2 = data2[:,:]
-X3 = data3[:,:]
-X4 = data4[:,:]
-X5 = data5[:,:]
-fig,(ax1,ax2,ax3,ax4,ax5) = plt.subplots(5, 1)
-
-ax1.set_ylabel('O1')
-# ax3.set_ylim([-2, 6])
-# ax3.axhline(y=0.5, color='blue')
-# ax3.axhline(y=1, color='red')
-ax1.plot(X1[:, 0], label='Labels 0', color='green')
-ax1.plot(X1[:, 1], label='Column 2', color='blue')
-
-ax2.set_ylabel('O2')
-ax2.plot(X2[:, 0], label='Labels 0', color='green')
-ax2.plot(X2[:, 1], label='Column 2', color='blue')
-
-ax3.set_ylabel('O3')
-ax3.plot(X3[:, 0], label='Labels 0', color='green')
-ax3.plot(X3[:, 1], label='Column 2', color='blue')
-
-ax4.set_ylabel('O4')
-ax4.plot(X4[:, 0], label='Labels 0', color='green')
-ax4.plot(X4[:, 1], label='Column 2', color='blue')
-
-ax5.set_ylabel('O4')
-ax5.plot(X5[:, 0], label='Labels 0', color='green')
-ax5.plot(X5[:, 1], label='Column 2', color='blue')
-
+ax1.plot(X5, label='Column 2', color='blue')
+# ax2.plot(X1, label='Column 2', color='pink')
+# ax3.plot(X0, label='Column 2', color='green')
+# ax4.plot(X2, label='Column 2', color='red')
 plt.grid()
 plt.show()

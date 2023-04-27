@@ -22,6 +22,8 @@ X = scaler.fit_transform(X)
 dwt_coeffs = pywt.wavedec(X, 'db4', level=9, axis=1)
 dwt_coeffs = np.concatenate(dwt_coeffs, axis=1)
 X= np.hstack((dwt_coeffs, X))
+
+
 X_train, X_test, y_train, y_test = train_test_split(X, y,test_size=0.3, random_state=88)
 
 imp = SimpleImputer(missing_values=np.nan, strategy='mean')

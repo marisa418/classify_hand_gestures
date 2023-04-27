@@ -1,37 +1,41 @@
-import joblib
 import pandas as pd
 import numpy as np
-from numpy import array
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
+from scipy import signal
+from sklearn.impute import SimpleImputer
+from sklearn.metrics import accuracy_score
 import warnings
-from sklearn.model_selection import GridSearchCV
-from sklearn.preprocessing import StandardScaler
-import pywt
 warnings.filterwarnings("ignore")
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+def acc(X):
+    n_samples, n_features = X.shape
+    aac = np.zeros(n_samples)
+    for i in range(n_samples):
+        aac[i] = np.mean(np.abs(np.diff(X[i, :-1])))
+    return np.hstack((aac.reshape(-1, 1), X))
 # Load data
+data =pd.read_csv('emgL.csv')
+X = data.iloc[:, :2]
+y = data.iloc[:, 2:]
 
-dataset = pd.read_csv('C:/Users/maris/OneDrive/Desktop/All โปรเจคจบ/PjHaRo/hello/Data/Data123/data123.csv')
-data=array(dataset)
-X = data[:,:-1]
-y = data[:,-1:]
-scaler = StandardScaler()
-X = scaler.fit_transform(X)
+sos = signal.iirfilter(90, [60,4500], rs=150, btype='band',
+                       analog=False, ftype='cheby2', fs=9600,
+                       output='sos')
+X = signal.sosfilt(sos,X)
+X1 = acc(X)
 
-dwt_coeffs = pywt.wavedec(X, 'db4', level=9, axis=1)
-dwt_coeffs = np.concatenate(dwt_coeffs, axis=1)
-X= np.hstack((dwt_coeffs, X))
-# Split data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=88)
+X_train, X_test, y_train, y_test = train_test_split(X1, y, test_size=0.3, random_state=88)
+imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+X_train = imp.fit_transform(X_train)
+X_test = imp.transform(X_test)
 
-from sklearn.ensemble import BaggingClassifier
-from sklearn.tree import DecisionTreeClassifier
-base_estimator = DecisionTreeClassifier(max_depth=6,max_features = None)
+base_estimator = DecisionTreeClassifier(max_depth=4,max_features = None)
 bagging = BaggingClassifier(base_estimator=base_estimator, n_estimators=10, random_state=88)
 bagging.fit(X_train, y_train)
 y_pred = bagging.predict(X_test)
-#accuracy = accuracy_score(y_test, y_pred)
-#print(accuracy)
-joblib.dump(bagging, 'bagging_model.joblib')
+accuracy = accuracy_score(y_test, y_pred)
+
+
+print("Accuracy: ", accuracy)

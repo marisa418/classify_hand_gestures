@@ -21,6 +21,7 @@ dwt_coeffs = np.concatenate(dwt_coeffs, axis=1)
 X= np.hstack((dwt_coeffs, X))
 # Split data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=88)
+
 from sklearn.neural_network import MLPClassifier
 mlp = MLPClassifier(hidden_layer_sizes=(5), activation='tanh', solver='adam', alpha=0.0001,learning_rate='constant' )
 mlp.fit(X_train, y_train)
