@@ -13,7 +13,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
 import warnings
 warnings.filterwarnings("ignore")
-data = pd.read_csv('emgL.csv')
+data = pd.read_csv('all.csv')
 
 X = data.iloc[:, :2]
 y = data.iloc[:, 2]
@@ -29,9 +29,6 @@ ranges_freq = [
     (60,100),(60,200),(60,300),(60,400),(60,500),(60,600),(60,700),(60,800),(60,900),(60,1000),(60,1500),(60,2000),(60,2500),(60,3000),(60,3500),(60,4000),(60,4500),
     (70,100),(70,200),(70,300),(70,400),(70,500),(70,600),(70,700),(70,800),(70,900),(70,1000),(70,1500),(70,2000),(70,2500),(70,3000),(70,3500),(70,4000),(70,4500),
     (80,100),(80,200),(80,300),(80,400),(80,500),(80,600),(80,700),(80,800),(80,900),(80,1000),(80,1500),(80,2000),(80,2500),(80,3000),(80,3500),(80,4000),(80,4500),]
-data =pd.read_csv('emgL.csv')
-X = data.iloc[:, :2]
-y = data.iloc[:, 2:]
 f1 = []
 f2 = []
 f3 = []
@@ -85,8 +82,7 @@ for i in ranges_freq:
     y_pred = svm.predict(X_test)
     accuracy4 = accuracy_score(y_test, y_pred)
     print("Acc SVM ",accuracy4)
-    
-    print("------------------------------------------------------------------")
+
     f1.append(accuracy1)
     f2.append(accuracy2)
     f3.append(accuracy3)

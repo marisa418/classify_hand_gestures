@@ -43,19 +43,19 @@ def dwt(X):
     dwt_coeffs = pywt.wavedec(X, 'db4', level=9, axis=1)
     dwt_coeffs = np.concatenate(dwt_coeffs, axis=1)
     return np.hstack((dwt_coeffs, X))
-data = pd.read_csv('emgL.csv')
+data = pd.read_csv('all.csv')
 X = data.iloc[:, :2]
 y = data.iloc[:, 2]
-sos = signal.iirfilter(90, [60,4500], rs=150, btype='band',
+sos = signal.iirfilter(90, [30,4500], rs=150, btype='band',
                        analog=False, ftype='cheby2', fs=9600,
                        output='sos')
 X = signal.sosfilt(sos,X)
 
 
 # RMS
-print('RMS:')
-X1 = rms(X).reshape(-1, 1)
-X_train, X_test, y_train, y_test = train_test_split(X1, y, test_size=0.3, random_state=88)
+#print('RMS:')
+#X1 = rms(X).reshape(-1, 1)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=88)
 imp = SimpleImputer(missing_values=np.nan, strategy='mean')
 X_train = imp.fit_transform(X_train)
 X_test = imp.transform(X_test)
