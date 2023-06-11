@@ -18,7 +18,9 @@ import warnings
 warnings.filterwarnings("ignore")
 
 print("posi number4")
+
 data = pd.read_csv('hello/Position/p1.csv')
+
 X = data.iloc[:, :2]
 y = data.iloc[:, 2]
 
